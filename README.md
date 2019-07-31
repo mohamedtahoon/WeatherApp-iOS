@@ -9,7 +9,7 @@ Weather application based on http://api.openweathermap.org
 * MapKit, CoreLocation
 
 
-![Simulator Screen Shot - iPhone XR - 2019-07-31 at 06 51 05](https://user-images.githubusercontent.com/10659577/62187833-e5833f80-b36a-11e9-9d3f-f2bd918c7263.png)
+<img width="249" alt="Untitled" src="https://user-images.githubusercontent.com/10659577/62188376-71499b80-b36c-11e9-9c84-9efa466c0b67.png">
 
      
 
