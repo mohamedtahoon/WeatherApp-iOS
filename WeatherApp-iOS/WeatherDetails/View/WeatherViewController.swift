@@ -8,11 +8,14 @@
 
 import UIKit
 
-class WeatherViewController: UIViewController {
+class WeatherViewController: UIViewController ,WeatherDelegate{
+    
+    
     let network: NetworkManager = NetworkManager.sharedInstance
     let alert = Alert()
     
-    var weatherPresenter: WeatherDelegate = WeatherDetailsPresenter()
+    var weatherPresenter = WeatherDetailsPresenter(weatherService: WeatherService())
+    
     var latitude : Double = 0.0
     var longitude : Double = 0.0
     
@@ -34,7 +37,11 @@ class WeatherViewController: UIViewController {
         NetworkManager.isUnreachable { _ in
             self.showAlert()
         }
-        weatherInfo()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        weatherPresenter.weatherInfo(long: longitude, lat: latitude)
+        weatherPresenter.setViewDelegate(weatherDelegate: self)
     }
     
     // MARK: - Show Alert When Connection Lost
@@ -48,26 +55,17 @@ class WeatherViewController: UIViewController {
         }
     }
     
-    func weatherInfo(){
-        weatherPresenter.getWeatherData(Longitude : self.longitude ,Latitude : self.latitude) { (error, result) in
-            if (error == nil) {
-                guard let result = result else {
-                    return
-                }
-                self.updateUIWithWeatherData(result as! WeatherDataModel)
-            }
-        }
-    }
     
-    func updateUIWithWeatherData(_ weather: WeatherDataModel) {
-        cityLabel.text = weather.city ?? ""
-        temperatureLabel.text = "\(weather.temperature ?? 0)°"
-        weatherIcon.image = UIImage(named: weather.weatherIconeName)
-        weatherDescription.text = weather.description ?? ""
-        country.text = weather.country ?? ""
-        windSpeed.text = String(weather.windSpeed ?? 0)
-        windDegree.text = String(weather.windDegree ?? 0)
-        humidity.text = String(weather.humidity ?? 0)
+    
+    func updateUIWithWeatherData(_ weather: (temperature: Int, city: String, icon: String, humidity: Int, windDegree: Int, windSpeed: Float, description: String, country: String, condition: Int)) {
+        cityLabel.text = weather.city 
+        temperatureLabel.text = "\(weather.temperature )°"
+        weatherIcon.image = UIImage(named: weather.icon)
+        weatherDescription.text = weather.description 
+        country.text = weather.country 
+        windSpeed.text = String(weather.windSpeed )
+        windDegree.text = String(weather.windDegree )
+        humidity.text = String(weather.humidity )
         
     }
 }

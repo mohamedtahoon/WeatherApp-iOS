@@ -1,44 +1,39 @@
 //
-//  WeatherDataModel.swift
+//  Weather.swift
 //  WeatherApp-iOS
 //
-//  Created by MacBookPro on 7/26/19.
+//  Created by MacBookPro on 8/1/19.
 //  Copyright © 2019 MacBookPro. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
-class WeatherDataModel {
+struct WeatherDataModel{
     
-    var temperature: Int?
-    var condition: Int?
-    var city: String?
-    var humidity: Int?
-    var windDegree: Int?
-    var windSpeed: Float?
-    var weatherIconeName: String {
-        return updateWeatherIcon(condition: condition)
-    }
-    var description: String?
-    var country: String?
-    var coord: Double?
-    var latitude: Double?
-    var longitude: Double?
+    var temperature: Int
+    var condition: Int
+    var city: String
+    var humidity: Int
+    var windDegree: Int
+    var windSpeed: Float
+    var weatherIconeName: String {return updateWeatherIcon(condition: condition)}
+    var description: String
+    var country: String
+    var latitude: Double
+    var longitude: Double
     
-    init() {
-        
-    }
     
-    init(temperature: Int ,condition: Int ,city: String ,humidity: Int,windDegree: Int,windSpeed: Float ,description: String ,country: String){
-        
-        self.temperature = temperature
-        self.condition = condition
-        self.city = city
-        self.description = description
-        self.country = country
-        self.humidity = humidity
-        self.windSpeed = windSpeed
-        self.windDegree = windDegree
+    
+    var weather: (Int, String, String, Int, Int, Float, String, String, Int){
+        return (temperature: temperature,
+                city: city,
+                icon: weatherIconeName,
+                humidity: humidity,
+                windDegree : windDegree,
+                windSpeed : windSpeed,
+                description : description,
+                country : country,
+                condition : condition)
     }
     
     func updateWeatherIcon(condition: Int?) -> String {
@@ -84,4 +79,3 @@ class WeatherDataModel {
         
     }
 }
-

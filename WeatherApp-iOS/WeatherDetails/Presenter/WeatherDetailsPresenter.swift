@@ -11,51 +11,35 @@ import Alamofire
 import SwiftyJSON
 
 protocol WeatherDelegate {
-    func getWeatherData(Longitude lon: Double ,Latitude lat: Double ,completion: @escaping (_ error:String?,_ result:Any?)->Void)
+    func updateUIWithWeatherData(_ weather: (temperature: Int, city: String, icon: String, humidity: Int, windDegree : Int, windSpeed : Float, description : String, country : String, condition : Int))
 }
 
-class WeatherDetailsPresenter: WeatherDelegate {
-    let apiKey = "f9f89e3f8df9497aef7f3556f912f872"
-    let units = "metric"
+class WeatherDetailsPresenter {
     
-    func getWeatherData(Longitude lon: Double, Latitude lat: Double, completion: @escaping (String?, Any?) -> Void) {
-        
-        let baseURL = "http://api.openweathermap.org/data/2.5/weather"
-        let paramString = "?lat=\(lat)&lon=\(lon)&appid=\(apiKey)&units=\(units)"
-        let url = baseURL + paramString
-        print(url)
-        
-        
-        Alamofire.request(url, method: .get, parameters: nil, encoding: URLEncoding.default, headers: nil)
-            .responseJSON {
-                response in
-                switch response.result{
-                case .failure:
-                    completion(response.error?.localizedDescription,false)
-                case .success:
-                    
-                    let json = JSON(response.value!)
-                    print(json)
-                    let tempResult = json["main"]["temp"].intValue
-                    let city = json["name"].stringValue
-                    let humidity = json["main"]["humidity"].intValue
-                    let windDegree = json["wind"]["deg"].intValue
-                    let windSpeed = json["wind"]["speed"].floatValue
-                    let condition = json["weather"][0]["id"].intValue
-                    let description = json["weather"][0]["description"].stringValue
-                    let country = json["sys"]["country"].stringValue
-                    
-                    let weather = WeatherDataModel(temperature: tempResult,
-                                                   condition: condition,
-                                                   city: city,
-                                                   humidity: humidity,
-                                                   windDegree: windDegree,
-                                                   windSpeed: windSpeed,
-                                                   description: description,
-                                                   country: country)
-                    
-                    completion(nil,weather)
-                }
+    var weatherService: WeatherService
+    var weatherDelegate: WeatherDelegate?
+    
+    
+        init(weatherService: WeatherService){
+            self.weatherService = weatherService
+    
+        }
+    
+    func setViewDelegate(weatherDelegate: WeatherDelegate?){
+        self.weatherDelegate = weatherDelegate
+    }
+    
+    
+    func weatherInfo(long: Double, lat: Double){
+        weatherService.getWeatherData(Longitude: long ,Latitude: lat) { (error, result) in
+            if let result = result {
+                self.weatherDelegate?.updateUIWithWeatherData(result.weather)
+                
+            }
         }
     }
+    
+    
+    
+    
 }
