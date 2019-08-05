@@ -31,7 +31,13 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="QMY-VS-Hlw"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Map" id="RGg-gY-DXb"/>
+                    <navigationItem key="navigationItem" title="Map" id="RGg-gY-DXb">
+                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="search" id="mfx-b0-P8D">
+                            <connections>
+                                <action selector="searchBtn:" destination="00S-Dv-VJ9" id="peB-Bh-Tea"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="mapView" destination="5RK-5B-jSU" id="m9U-1V-qCW"/>
                     </connections>
