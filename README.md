@@ -2,7 +2,7 @@
 
 Weather application based on http://api.openweathermap.org
 
-
+* MVP Design Pattern
 * Alamofire
 * SwiftyJSON
 * ReachabilitySwift (https://github.com/neoighodaro/Handling-internet-connection-reachability-in-Swift)
