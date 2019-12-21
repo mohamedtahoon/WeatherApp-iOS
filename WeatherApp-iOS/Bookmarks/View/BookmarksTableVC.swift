@@ -18,6 +18,7 @@ class BookmarksTableVC: UITableViewController {
         super.viewDidLoad()
         self.cities = bookmarkPresenter.loadCities()
         self.tableView.reloadData()
+        self.tableView.separatorColor = .white
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -85,6 +86,7 @@ class BookmarksTableVC: UITableViewController {
         let reotate = CATransform3DTranslate(CATransform3DIdentity, 0,40, 0)
         cell.layer.transform = reotate
         cell.alpha = 0
+        cell.accessoryView = UIImageView(image: UIImage(named: "5.png"))
         UIView.animate(withDuration: 0.9){
             cell.layer.transform = CATransform3DIdentity
             cell.alpha = 1.0

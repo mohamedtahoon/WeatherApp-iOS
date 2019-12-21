@@ -21,6 +21,7 @@ class WeatherViewController: UIViewController ,WeatherDelegate{
     
     @IBOutlet weak var weatherIcon: UIImageView!
     @IBOutlet weak var cityLabel: UILabel!
+    @IBOutlet weak var date: UILabel!
     @IBOutlet weak var temperatureLabel: UILabel!
     @IBOutlet weak var weatherDescription: UILabel!
     @IBOutlet weak var country: UILabel!
@@ -59,13 +60,20 @@ class WeatherViewController: UIViewController ,WeatherDelegate{
     
     func updateUIWithWeatherData(_ weather: (temperature: Int, city: String, icon: String, humidity: Int, windDegree: Int, windSpeed: Float, description: String, country: String, condition: Int)) {
         cityLabel.text = weather.city 
-        temperatureLabel.text = "\(weather.temperature )°"
+        temperatureLabel.text = "\(weather.temperature)°"
         weatherIcon.image = UIImage(named: weather.icon)
         weatherDescription.text = weather.description 
-        country.text = weather.country 
-        windSpeed.text = String(weather.windSpeed )
-        windDegree.text = String(weather.windDegree )
-        humidity.text = String(weather.humidity )
+//        country.text = weather.country 
+        windSpeed.text = "\(String(weather.windSpeed))km/h"
+        windDegree.text = "    \(String(weather.windDegree))"
+        humidity.text = " \(String(weather.humidity))%"
+        
+        let date = Date()
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd-MM-yyyy"
+        let result = formatter.string(from: date)
+
+        self.date.text = result
         
     }
 }
